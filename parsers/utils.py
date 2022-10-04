@@ -1,14 +1,20 @@
-import requests
+import time
+from selenium import webdriver
 
+def get_html(url):
+    """
+    -Функция работает с пакетом selenium(помогает обойти блакировки get-запросов на авито и циан).
+    -Для работы нужно скачать ChromeDriver(https://sites.google.com/chromium.org/driver/).
+    -Помесить ChromeDriver в паку с вертульным окружением проекта (env/bin).
+    """
+    # start web browser
+    browser=webdriver.Chrome()
 
-def get_html(url):# по url полсчаем hrml страницу и возвращаем ее
-    headers = {
-        'User=Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36'
-        }
-    try:
-        result = requests.get(url, headers=headers)
-        result.raise_for_status()
-        return result.text
-    except (requests.RequestException, ValueError):
-        print("Сетевая ошибка")
-        return False        
+    # get source code
+    browser.get(url)
+    html = browser.page_source
+    time.sleep(2)
+
+    # close web browser
+    browser.close()
+    return html
