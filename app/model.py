@@ -1,11 +1,6 @@
-from flask_sqlalchemy import SQLAlchemy #Импортируем библиотеку
+from flask_sqlalchemy import SQLAlchemy
+from datetime import datetime
 
-from app import app #Импортируем объект
-from datetime import datetime #Импортитуем библиотеку дата и время
-
-
-
-app.config['SOLALCHEMY_DATABASE_URI'] = 'sqlite:///blog.db' #устанавливаем значение той базы данных с которой будем работать и создаём название blog.db(с расширением db)
 db = SQLAlchemy() #Создаём объект на основе класса SQLAlchemy и передаём туда объект app созданный на основе класса Flask
 
 class Real_estate_ads(db.Model): #Создаём класс и говорим что наследуем всё от объекта db, который является объектом SQLAlchemy
