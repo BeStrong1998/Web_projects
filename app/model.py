@@ -1,5 +1,4 @@
 from flask_sqlalchemy import SQLAlchemy
-#from datetime import datetime
 
 db = SQLAlchemy() #Создаём объект на основе класса SQLAlchemy и передаём туда объект app созданный на основе класса Flask
 
