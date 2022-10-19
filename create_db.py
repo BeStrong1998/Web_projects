@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 from webapp import db
 from webapp import create_app
 
@@ -6,3 +7,10 @@ with app.app_context(): #контекст нам нужен если мы обр
     db.create_all()
 
     
+=======
+from app import db, create_app
+
+app = create_app()
+with app.app_context():
+    db.create_all()
+>>>>>>> 008685bcc8b37e28b80bf57dd0bfa7e7c5be3f1c
