@@ -1,10 +1,7 @@
 
 from flask_sqlalchemy import SQLAlchemy #Импортируем библиотеку
 from datetime import datetime
-from flask_sqlalchemy import SQLAlchemy
 
-
-from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy() #Создаём объект на основе класса SQLAlchemy и передаём туда объект app созданный на основе класса Flask
 
