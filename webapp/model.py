@@ -1,10 +1,9 @@
 
 from flask_sqlalchemy import SQLAlchemy #Импортируем библиотеку
 from datetime import datetime
-from flask_sqlalchemy import SQLAlchemy
 
 
-from flask_sqlalchemy import SQLAlchemy
+
 
 db = SQLAlchemy() #Создаём объект на основе класса SQLAlchemy и передаём туда объект app созданный на основе класса Flask
 
@@ -18,6 +17,7 @@ class RealEstateAds(db.Model): #Создаём класс и говорим чт
     square = db.Column(db.Float, nullable=False) # Площадь квартиры указанная в объявлении
     address = db.Column(db.String, nullable=False) # Адрес квартиры
     number_of_rooms = db.Column(db.Integer, nullable=False) #Колличество комнат в квартире
+    email = db.Column(db.String(50))
 
     def __repr__(self):  #Вызываем метод питона, self означает что мы обращаемся к объекту класса который сейчас активен тоесть News
-        return '<RealEstateAds {} {}>'.format(self.tatle, self.url) #Позволит опознать каждую из новостей выведет tatle-название объявления и url-адрес объявления
+        return '<RealEstateAds {} {}>'.format(self.title, self.url) #Позволит опознать каждую из новостей выведет tatle-название объявления и url-адрес объявления
