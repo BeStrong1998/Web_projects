@@ -1,5 +1,8 @@
+
 from flask import Flask, render_template
 from flask_migrate import Migrate
+
+
 
 from webapp.model import db
 
@@ -11,12 +14,10 @@ def create_app():
     app.config.from_pyfile('config.py')
     db.init_app(app)
     migrate = Migrate(app, db)
-
-
    
     @app.route('/')
     def index():
-        return "Привет!"
+        return render_template("index.html")
 
     return app
 
