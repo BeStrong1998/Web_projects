@@ -3,8 +3,6 @@ from flask_sqlalchemy import SQLAlchemy #Импортируем библиоте
 from datetime import datetime
 
 
-
-
 db = SQLAlchemy() #Создаём объект на основе класса SQLAlchemy и передаём туда объект app созданный на основе класса Flask
 
 class RealEstateAds(db.Model): #Создаём класс и говорим что наследуем всё от объекта db, который является объектом SQLAlchemy
