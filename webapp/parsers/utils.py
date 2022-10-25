@@ -1,6 +1,7 @@
 import time
 from selenium import webdriver
-from webapp.model import db, RealEstateAds
+from webapp import db
+from webapp.model import RealEstateAds
 
 
 def get_html(url):
@@ -22,9 +23,9 @@ def get_html(url):
     return html
 
 
-def save_flat(url, residential_name, title, published, price):
+def save_flat(url, title, date, price):
     flat_exits = RealEstateAds.query.filter(RealEstateAds.url == url).count()
     if not flat_exits:
-        new_flat = RealEstateAds(title=title, url=url, published=published, residential_name=residential_name, price=price)
+        new_flat = RealEstateAds(title=title, url=url, date=date, price=price)
         db.session.add(new_flat)
         db.session.commit()
