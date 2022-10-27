@@ -49,12 +49,13 @@ def get_flat_content():
         html = get_html(flat.url)#получяем html на отдельную квартиру
         if html:
             soup = BeautifulSoup(html, 'html.parser')
-            flat_ads = soup.find('p', class_='a10a3f92e9--description-text--YNzWU')#если описание сушествует то добовляем его в базу данных
+            address = soup.find('div', class_="a10a3f92e9--geo--VTC9X").find("address",class_="a10a3f92e9--address--F06X3").text                   #если описание сушествует то добовляем его в базу данных
+            flat_ads = soup.find('main', class_='a10a3f92e9--offer_card_page--qobLH').decode_contents()
             if flat_ads:
                 flat.ads = flat_ads
+                flat.address = address
                 db.session.add(flat)
                 db.session.commit()
-
 
 if __name__ == '__main__':#запускаем для отладки парсера файл fill in
     get_flats_snippets()

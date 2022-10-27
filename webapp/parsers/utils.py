@@ -15,8 +15,9 @@ def get_html(url):
 
     # get source code
     browser.get(url)
+    time.sleep(6)
     html = browser.page_source
-    time.sleep(2)
+    #time.sleep(6)
 
     # close web browser
     browser.close()
@@ -29,3 +30,5 @@ def save_flat(url, title, date, price):
         new_flat = RealEstateAds(title=title, url=url, date=date, price=price)
         db.session.add(new_flat)
         db.session.commit()
+
+        
