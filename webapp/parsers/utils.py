@@ -15,13 +15,13 @@ def get_html(url):
 
     # get source code
     browser.get(url)
+    time.sleep(6)
     html = browser.page_source
-    time.sleep(2)
+    #time.sleep(6)
 
     # close web browser
     browser.close()
     return html
-
 
 def save_flat(url, title, date, price):
     flat_exits = RealEstateAds.query.filter(RealEstateAds.url == url).count()
