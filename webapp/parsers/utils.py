@@ -23,12 +23,9 @@ def get_html(url):
     browser.close()
     return html
 
-
 def save_flat(url, title, date, price):
     flat_exits = RealEstateAds.query.filter(RealEstateAds.url == url).count()
     if not flat_exits:
         new_flat = RealEstateAds(title=title, url=url, date=date, price=price)
         db.session.add(new_flat)
         db.session.commit()
-
-        

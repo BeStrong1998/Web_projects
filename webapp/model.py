@@ -18,5 +18,3 @@ class RealEstateAds(db.Model): #Создаём класс и говорим чт
 
 def __repr__(self):  #Вызываем метод питона, self означает что мы обращаемся к объекту класса который сейчас активен тоесть News
         return '<RealEstateAds {} {} {} {} {} {} {} {} {} {}>'.format(self.id, self.title, self.url, self.date, self.ads, self.price, self.square, self.address, self.number_of_rooms, self.email) #Позволит опознать каждую из новостей выведет tatle-название объявления и url-адрес объявления
-
-
