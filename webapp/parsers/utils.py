@@ -1,5 +1,8 @@
 import time
 from selenium import webdriver
+from webapp import db
+from webapp.model import RealEstateAds
+
 
 def get_html(url):
     """
@@ -12,9 +15,17 @@ def get_html(url):
 
     # get source code
     browser.get(url)
+    time.sleep(6)
     html = browser.page_source
-    time.sleep(2)
+    #time.sleep(6)
 
     # close web browser
     browser.close()
     return html
+
+def save_flat(url, title, date, price):
+    flat_exits = RealEstateAds.query.filter(RealEstateAds.url == url).count()
+    if not flat_exits:
+        new_flat = RealEstateAds(title=title, url=url, date=date, price=price)
+        db.session.add(new_flat)
+        db.session.commit()
