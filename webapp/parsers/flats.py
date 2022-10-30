@@ -29,7 +29,7 @@ def parse_date(date_str):# парсим строку на вхождение с�
 
 
 def get_flats_snippets():# парсимим страницу на cian.ru по новострокам и берем от туда ссылку на конкретное обялвение
-    for page in range(1, 5):# парсим первые 5 страниц
+    for page in range(1):# парсим первые 5 страниц
         html = get_html(f'https://www.cian.ru/cat.php?deal_type=sale&engine_version=2&offer_type=flat&p={page}&region=1')# в 'page' передаем параметр номер страницы
         soup = BeautifulSoup(html, 'html.parser')
         flats_list = soup.find('div', class_="_93444fe79c--wrapper--W0WqH").find_all('article', class_='_93444fe79c--container--Povoi _93444fe79c--cont--OzgVc')
@@ -53,9 +53,12 @@ def get_flat_content():
             soup = BeautifulSoup(html, 'html.parser')
             address = soup.find('div', class_="a10a3f92e9--geo--VTC9X").find("address",class_="a10a3f92e9--address--F06X3").text                   #если описание сушествует то добовляем его в базу данных
             flat_ads = soup.find('main', class_='a10a3f92e9--offer_card_page--qobLH').decode_contents()
+            square = soup.find('div', class_='a10a3f92e9--info-value--bm3DC').text
+            square = float((square.replace(' м²', '').replace(',', '.')))# привеодим строку к float для кооректной записи в базу
             if flat_ads:
                 flat.ads = flat_ads
                 flat.address = address
+                flat.square = square
                 db.session.add(flat)
                 db.session.commit()
 
