@@ -29,23 +29,25 @@ def parse_date(date_str):# парсим строку на вхождение с�
 
 
 def get_flats_snippets():# парсимим страницу на cian.ru по новострокам и берем от туда ссылку на конкретное обялвение
-    html = get_html("https://www.cian.ru/kupit-kvartiru-novostroyki/")
-    soup = BeautifulSoup(html, 'html.parser')
-    flats_list = soup.find('div', class_="_93444fe79c--wrapper--W0WqH").find_all('article', class_='_93444fe79c--container--Povoi _93444fe79c--cont--OzgVc')
-    for flat in flats_list:
-        url = flat.find('a')['href']
-        title = flat.find('span', class_='_93444fe79c--color_primary_100--mNATk _93444fe79c--lineHeight_28px--whmWV _93444fe79c--fontWeight_bold--ePDnv _93444fe79c--fontSize_22px--viEqA _93444fe79c--display_block--pDAEx _93444fe79c--text--g9xAG _93444fe79c--text_letterSpacing__normal--xbqP6').text
-        date = flat.find('div', class_="_93444fe79c--absolute--yut0v").text
-        date = parse_date(date)# приобразовываем данные в формат datetime
-        price = flat.find('span', class_='_93444fe79c--color_black_100--kPHhJ _93444fe79c--lineHeight_28px--whmWV _93444fe79c--fontWeight_bold--ePDnv _93444fe79c--fontSize_22px--viEqA _93444fe79c--display_block--pDAEx _93444fe79c--text--g9xAG _93444fe79c--text_letterSpacing__normal--xbqP6').text
-        price = price.replace('₽', '').replace(' ', '')# убераем пробелы и обозначение рублей из суммы
-        print(url, title, date, price)
-        save_flat(url, title, date, price)# сохраняем данные в базу
+    for page in range(1, 5):# парсим первые 5 страниц
+        html = get_html(f'https://www.cian.ru/cat.php?deal_type=sale&engine_version=2&offer_type=flat&p={page}&region=1')# в 'page' передаем параметр номер страницы
+        soup = BeautifulSoup(html, 'html.parser')
+        flats_list = soup.find('div', class_="_93444fe79c--wrapper--W0WqH").find_all('article', class_='_93444fe79c--container--Povoi _93444fe79c--cont--OzgVc')
+        for flat in flats_list:
+            url = flat.find('a')['href']
+            title = flat.find('span', class_='_93444fe79c--color_primary_100--mNATk _93444fe79c--lineHeight_28px--whmWV _93444fe79c--fontWeight_bold--ePDnv _93444fe79c--fontSize_22px--viEqA _93444fe79c--display_block--pDAEx _93444fe79c--text--g9xAG _93444fe79c--text_letterSpacing__normal--xbqP6').text
+            date = flat.find('div', class_="_93444fe79c--absolute--yut0v").text
+            date = parse_date(date)# приобразовываем данные в формат datetime
+            price = flat.find('span', class_='_93444fe79c--color_black_100--kPHhJ _93444fe79c--lineHeight_28px--whmWV _93444fe79c--fontWeight_bold--ePDnv _93444fe79c--fontSize_22px--viEqA _93444fe79c--display_block--pDAEx _93444fe79c--text--g9xAG _93444fe79c--text_letterSpacing__normal--xbqP6').text
+            price = price.replace('₽', '').replace(' ', '')# убераем пробелы и обозначение рублей из суммы
+            print(url, title, date, price)
+            save_flat(url, title, date, price)# сохраняем данные в базу
 
 
 def get_flat_content():
     flat_without_text = RealEstateAds.query.filter(RealEstateAds.ads.is_(None))#запрос в базу по url без описания квартиры
     for flat in flat_without_text:
+        print(flat.url)
         html = get_html(flat.url)#получяем html на отдельную квартиру
         if html:
             soup = BeautifulSoup(html, 'html.parser')
