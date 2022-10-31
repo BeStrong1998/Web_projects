@@ -3,10 +3,10 @@ import platform
 
 from bs4 import BeautifulSoup
 from datetime import datetime, timedelta
+
 from webapp.parsers.utils import get_html, save_flat
 from webapp import db
 from webapp.model import RealEstateAds
-
 
 if platform.system() == 'Windows':
     locale.setlocale(locale.LC_ALL, "russian")
@@ -49,13 +49,26 @@ def get_flat_content():
         html = get_html(flat.url)#получяем html на отдельную квартиру
         if html:
             soup = BeautifulSoup(html, 'html.parser')
-            address = soup.find('div', class_="a10a3f92e9--geo--VTC9X").find("address",class_="a10a3f92e9--address--F06X3").text                   #если описание сушествует то добовляем его в базу данных
+            address = soup.find('div', class_="a10a3f92e9--geo--VTC9X").find("address", class_="a10a3f92e9--address--F06X3").text 
+            square = soup.find('div', class_="a10a3f92e9--info-value--bm3DC").text # если описание сушествует то добовляем его в базу данных
             flat_ads = soup.find('main', class_='a10a3f92e9--offer_card_page--qobLH').decode_contents()
-            if flat_ads:
+        if flat_ads:
                 flat.ads = flat_ads
                 flat.address = address
+                flat.square = square
                 db.session.add(flat)
                 db.session.commit()
+
+"""def get_square():
+    square_text = RealEstateAds.query.filter(RealEstateAds.ads.is_(None))
+    for flat in square_text:
+        html = get_html(flat.url)
+        if html:
+            soup = BeautifulSoup(html, 'html.parser')
+            square = soup.find('div', class_="a10a3f92e9--info-value--bm3DC").text
+            print(square)"""
+        
+
 
 if __name__ == '__main__':#запускаем для отладки парсера файл fill in
     get_flats_snippets()
