@@ -1,9 +1,10 @@
 from flask import Flask, render_template, abort
+
 from flask_migrate import Migrate
-
-
 from webapp.model import db
 from webapp.model import RealEstateAds
+from webapp.parsers.flats import get_flats_snippets, get_flat_content
+ 
 def create_app():
     app = Flask(__name__)
     app.config.from_pyfile('config.py')

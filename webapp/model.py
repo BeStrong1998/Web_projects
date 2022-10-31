@@ -15,5 +15,5 @@ class RealEstateAds(db.Model): #Создаём класс и говорим чт
     address = db.Column(db.String, nullable=True) # Адрес квартиры
     number_of_rooms = db.Column(db.Integer, nullable=True) #Колличество комнат в квартире
 
-def __repr__(self):  #Вызываем метод питона, self означает что мы обращаемся к объекту класса который сейчас активен тоесть News
-        return '<RealEstateAds {} {} {} {} {} {} {} {} {} {}>'.format(self.id, self.title, self.url, self.date, self.ads, self.price, self.square, self.address, self.number_of_rooms) #Позволит опознать каждую из новостей выведет tatle-название объявления и url-адрес объявления
+def __repr__(self):
+        return '<RealEstateAds {} {} {} {} {} {} {} {} {} {}>'.format(self.id, self.title, self.url, self.date, self.ads, self.price, self.square, self.address, self.number_of_rooms)

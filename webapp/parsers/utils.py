@@ -15,9 +15,8 @@ def get_html(url):
 
     # get source code
     browser.get(url)
-    time.sleep(6)
+    time.sleep(2)
     html = browser.page_source
-    #time.sleep(6)
 
     # close web browser
     browser.close()
