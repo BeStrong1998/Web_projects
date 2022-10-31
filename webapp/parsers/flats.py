@@ -3,6 +3,7 @@ import platform
 
 from bs4 import BeautifulSoup
 from datetime import datetime, timedelta
+
 from webapp.parsers.utils import get_html, save_flat
 from webapp import db
 from webapp.model import RealEstateAds
@@ -85,6 +86,7 @@ def get_flat_content():
                 flat.number_of_rooms = number_of_rooms
                 db.session.add(flat)
                 db.session.commit()
+
 
 if __name__ == '__main__':#запускаем для отладки парсера файл fill in
     get_flats_snippets()

@@ -1,11 +1,12 @@
 {% extends "base.html" %}
 
+
 {% block title %}
-Объявления
+
 {% endblock %}
 
-{% block body %}
-<h1>Квартиры в Москве</h1>
+
+{% block content %}
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 <table id="data" class="table table-striped">
     <thead>
@@ -23,7 +24,7 @@
       {% for el in flats %}
         <tr>
           <td>{{ el.title }}</td>
-          <td>{{ el.url }}</td>
+          <td><a href = "{{ url_for('single_flat', flat_id=el.id) }}">{{ el.url }}</a></td>
           <td>{{ el.date }}</td>
           <td>{{ el.price }}</td>
           <td>{{ el.square }}</td>
@@ -34,4 +35,3 @@
     </tbody>
   </table>
 {% endblock %}
-
