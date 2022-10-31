@@ -28,6 +28,28 @@ def parse_date(date_str):# парсим строку на вхождение с�
         return datetime.strptime(date_str, '%d %b, %H:%M').replace(year=this_year)
 
 
+def parser_room(room_str):
+    if '8-комн' in room_str:
+        room = 8
+    elif '7-комн' in room_str:
+        room = 7
+    elif '6-комн' in room_str:
+        room = 6
+    elif '5-комн' in room_str:
+        room = 5
+    elif '4-комн' in room_str:
+        room = 4
+    elif '3-комн' in room_str:
+        room = 3
+    elif '2-комн' in room_str:
+        room = 2
+    elif '1-комн' in room_str:
+        room = 1
+    else:# студия
+        room = 9
+    return room
+
+
 def get_flats_snippets():# парсимим страницу на cian.ru по новострокам и берем от туда ссылку на конкретное обялвение
     for page in range(1):# парсим первые 5 страниц
         html = get_html(f'https://www.cian.ru/cat.php?deal_type=sale&engine_version=2&offer_type=flat&p={page}&region=1')# в 'page' передаем параметр номер страницы
@@ -45,20 +67,22 @@ def get_flats_snippets():# парсимим страницу на cian.ru по �
 
 
 def get_flat_content():
-    flat_without_text = RealEstateAds.query.filter(RealEstateAds.ads.is_(None))#запрос в базу по url без описания квартиры
+    flat_without_text = RealEstateAds.query.filter(RealEstateAds.number_of_rooms.is_(None))#запрос в базу по url без описания квартиры
     for flat in flat_without_text:
         print(flat.url)
         html = get_html(flat.url)#получяем html на отдельную квартиру
         if html:
             soup = BeautifulSoup(html, 'html.parser')
-            address = soup.find('div', class_="a10a3f92e9--geo--VTC9X").find("address",class_="a10a3f92e9--address--F06X3").text                   #если описание сушествует то добовляем его в базу данных
+            address = soup.find('div', class_="a10a3f92e9--geo--VTC9X").find("address",class_="a10a3f92e9--address--F06X3").text #парсинг адреса
             flat_ads = soup.find('main', class_='a10a3f92e9--offer_card_page--qobLH').decode_contents()
-            square = soup.find('div', class_='a10a3f92e9--info-value--bm3DC').text
+            square = soup.find('div', class_='a10a3f92e9--info-value--bm3DC').text# парсинг колличество квадратных метров
             square = float((square.replace(' м²', '').replace(',', '.')))# привеодим строку к float для кооректной записи в базу
+            number_of_rooms = parser_room(soup.find('h1', class_='a10a3f92e9--title--UEAG3').text)# парсим колличество комнот
             if flat_ads:
                 flat.ads = flat_ads
                 flat.address = address
                 flat.square = square
+                flat.number_of_rooms = number_of_rooms
                 db.session.add(flat)
                 db.session.commit()
 
