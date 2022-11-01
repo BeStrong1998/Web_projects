@@ -1,9 +1,9 @@
 from flask import Flask, render_template, abort
 
+from webapp.forms import LoginForm
 from flask_migrate import Migrate
 from webapp.model import db
 from webapp.model import RealEstateAds
-from webapp.parsers.flats import get_flats_snippets, get_flat_content
  
 def create_app():
     app = Flask(__name__)
@@ -23,5 +23,11 @@ def create_app():
         if not my_flat:
             abort(404)
         return render_template('single_flat.html', page_title=my_flat.title, flat=my_flat)
+
+    @app.route('/login')
+    def login():
+        titles = "Авторизация"
+        login_form = LoginForm()
+        return render_template('login.html', page_title=titles, form=login_form)
 
     return app
