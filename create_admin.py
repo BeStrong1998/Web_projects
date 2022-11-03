@@ -1,12 +1,14 @@
-from getpass import getpass
-import sys
+"""Создаём файл create_admin.py который поможет нам из командной строки пользователя дабовлять"""
+
+from getpass import getpass # Не видно в командной строке что печат пользователь (Для вода пароля)
+import sys # Этот модуль нужен для того что бы правельно завершать наш скрипт
 
 from webapp import create_app
 from webapp.model import db, User
 
 app = create_app() #Создаём апликейшен
 
-with app.app_context(): # Конектим базу данных
+with app.app_context(): # Доступ к базе данных
     username = input('Введите имя:') # Запрашиваем username в командной строке
 
     if User.query.filter(User.username == username).count(): #Проверяем что такой пользователь существует
@@ -21,9 +23,9 @@ with app.app_context(): # Конектим базу данных
         sys.exit(0) # Выходим из программы
 
 
-    #Если проверки прошли то можем создавать пользователя
+    """Если проверки прошли то можем создавать пользователя"""
     new_user = User(username=username, role='admin') #Создаём объект пользователя
-    new_user.set_password(password1) #Создаём пароль, превращаем пароль в шифрованную строку при помощи функции set_password
+    new_user.set_password(password1) #Создаём пароль, превращаем пароль в зашифрованную строку при помощи функции set_password
 
     db.session.add(new_user) #Фуиксируем пользователя
     db.session.commit() #Сохраняем пользователя

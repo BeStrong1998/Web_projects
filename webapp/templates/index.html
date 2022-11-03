@@ -29,7 +29,7 @@
       {% for el in flats %}
         <tr>
           <td>{{ el.title }}</td>
-          <td><a href = "{{ url_for('single_flat', flat_id=el.id) }}">Показ объявления</a></td>
+          <td><a href = "{{ url_for('single_flat', flat_id=el.id) }}">Показать объявления</a></td>
           <td>{{ el.date }}</td>
           <td>{{ el.price }}</td>
           <td>{{ el.square }}</td>
