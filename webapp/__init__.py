@@ -36,7 +36,7 @@ def create_app():
     @app.route('/')
     def index():
         titels = "Объявления"
-        flats = RealEstateAds.query.filter(RealEstateAds.ads.isnot(None)).order_by(RealEstateAds.date.desc()).all()
+        flats = RealEstateAds.query.filter(RealEstateAds.photos.isnot(None)).order_by(RealEstateAds.date.desc()).all()
         return render_template("index.html", page_title=titels, flats=flats)
         
 
