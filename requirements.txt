@@ -27,3 +27,6 @@ trio-websocket==0.9.2
 urllib3==1.26.12
 Werkzeug==2.2.2
 wsproto==1.2.0
+flask_wtf==1.0.1
+flask-login==0.6.2
+datetime==4.7

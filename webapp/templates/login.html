@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+<div class="row">
+    <div class="col-8">
+        {% with messages = get_flashed_messages() %}  <!--Добавляем шаблон для вывода цветовой отображающей таблички-->
+        {% if messages %}
+        <div class="alert alert-warning" role="alert">
+            {% for message in messages %}
+                {{ message }}<br>
+            {% endfor %}
+        </div>
+        {% endif %}
+        {% endwith %}
+        <title>{{ page_title }}</title>
+        <h4>Авторизация</h4>
+            <form action="{{ url_for('process_login') }}" method="post">
+                {{ form.hidden_tag() }}
+                <div class="form-group">
+                    {{ form.username.label }}<br>  <!--Добавляем форму авторизации 'Имя пользователя'-->
+                    {{ form.username() }}
+                </div>
+                <div class="form-group">
+                    {{ form.password.label }}<br>   <!--Добавляем форму авторизации 'Пароль'-->
+                    {{ form.password() }}
+                </div><br>
+                    <div class="form-group">
+                        {{ form.remember_me() }}    <!--Добавляем форму галочки для запоминания пароля на сайте-->
+                        {{ form.remember_me.label(class_='form-check-label') }}  
+                    </div>
+                    {{ form.submit() }}             <!--Добавляем кнопку 'Отправить'-->
+            </form>
+        </div>
+        <div class="col-4">
+    </div>
+</div>
+</div>
+{% endblock %}

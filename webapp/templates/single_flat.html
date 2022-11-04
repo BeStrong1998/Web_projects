@@ -3,9 +3,16 @@
 {% block content %}
     <div class="row">
         <div class="col-8 news-content">
-            {{ flat.ads|safe }}
+           <a href = {{ flat.url }}>{{ flat.url }}</a>
+            <p align="left">
+            <h5>Продается {{ flat.title|safe }}
+                за {{ flat.price|safe }} руб.
+            </p> 
+            </h5>
+            {{ flat.address|safe }}
         </div>
-        <div class="col-4">
+        <div class="col-8">
+            <h1></h1>
         </div>
     </div>
 {% endblock %}
