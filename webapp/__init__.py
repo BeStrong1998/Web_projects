@@ -35,8 +35,7 @@ def create_app():
 
 
     @app.route('/')
-    @app.route('/index/<int:page>', methods = ['GET', 'POST'])
-    def index(page = 1):
+    def index():
         titels = "Объявления"
         flats = RealEstateAds.query.filter(RealEstateAds.photos.isnot(None)).order_by(RealEstateAds.date.desc()).all()
         return render_template("index.html", page_title=titels, flats=flats)
