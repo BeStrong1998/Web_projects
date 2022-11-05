@@ -1,10 +1,17 @@
-.news-content img {
-    max-width: 100%;
+.news-content {
+    margin-right: 0%; /* Отступ справа */
+    margin-left: 4%; /* Отступ слева */
 }
+
 .col-8 img {
     max-width: 70%;
 }
 
 .first_photo img {
     max-width: 70%;
+}
+
+.col-12 { 
+    margin-right: 1%; /* Отступ справа */
+    margin-left: 0%; /* Отступ слева */
 }

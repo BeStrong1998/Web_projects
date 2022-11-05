@@ -16,9 +16,10 @@ class RealEstateAds(db.Model): #Создаём класс и говорим чт
     address = db.Column(db.String, nullable=True) # Адрес квартиры
     number_of_rooms = db.Column(db.Integer, nullable=True) #Колличество комнат в квартире
     photos = db.Column(db.Text, nullable=True)
+    text = db.Column(db.Text, nullable=True)
 
     def __repr__(self):
-        return '<RealEstateAds {} {} {} {} {} {} {} {} {} {}>'.format(self.id, self.title, self.url, self.date, self.photos, self.price, self.square, self.address, self.number_of_rooms)
+        return '<RealEstateAds {} {} {} {} {} {} {} {} {} {} {}>'.format(self.id, self.title, self.url, self.date, self.photos, self.price, self.square, self.address, self.number_of_rooms, self.text)
 
 
 class User(db.Model, UserMixin): #Создаём класс User со своими полями

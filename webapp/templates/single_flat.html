@@ -3,16 +3,17 @@
 {% block content %}
     <div class="row">
         <div class="col-8 news-content">
-           <a href = {{ flat.url }}>{{ flat.url }}</a>
             <p align="left">
-            <h5>Продается {{ flat.title|safe }}
-                за {{ flat.price|safe }} руб. 
+            <a href = {{ flat.url }}>{{ flat.url }}</a>
+                <h1>Продается {{ flat.title }} </h1>
+                <h2>Цена: {{ flat.price }} руб. </h2>
+                <h3>Адрес: {{ flat.address }}</h3>
+                <h4>Количество комнат -{{ flat.number_of_rooms }}</h4>
+                <p>{{ flat.text }}</p>
             </p>
-            </h5>
-            {{ flat.address|safe }}
         </div>
-        <div class="col-8">
-            <h1><img src={{ flat.photos }}></h1>
+        <div class="col-3 photo-content">
+            <img src={{ flat.photos }} class="img-thumbnail" alt="...">
         </div>
     </div>
 {% endblock %}
