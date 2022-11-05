@@ -1,5 +1,6 @@
 from flask import Flask, render_template, abort, flash, redirect, url_for
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
+
 """ Подключаем flask_login с наше приложение с помощью  LoginManager
     login_user - Для реализации обработке самой формы логина
     flash - позволяет передавать сообщения между route-ами
@@ -36,7 +37,7 @@ def create_app():
     @app.route('/')
     def index():
         titels = "Объявления"
-        flats = RealEstateAds.query.filter(RealEstateAds.ads.isnot(None)).order_by(RealEstateAds.date.desc()).all()
+        flats = RealEstateAds.query.filter(RealEstateAds.photos.isnot(None)).order_by(RealEstateAds.date.desc()).all()
         return render_template("index.html", page_title=titels, flats=flats)
         
 

@@ -23,6 +23,7 @@
         <th>square</th>
         <th>address</th>
         <th>number_of_rooms</th>
+        <th>Photo</th>
       </tr>
     </thead>
     <tbody>
@@ -35,6 +36,11 @@
           <td>{{ el.square }}</td>
           <td>{{ el.address }}</td>
           <td>{{ el.number_of_rooms }}</td>
+          <td>
+            <div class="first_photo">
+            <img src={{ el.photos }}>
+            </div>
+          </td>
         </tr>
       {% endfor %}
     </tbody>
