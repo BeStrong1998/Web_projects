@@ -40,6 +40,7 @@ def get_flat_content():
             square = soup.find('div', class_='a10a3f92e9--info-value--bm3DC').text# парсинг колличество квадратных метров
             square = float((square.replace(' м²', '').replace(',', '.')))# привеодим строку к float для кооректной записи в базу
             number_of_rooms = parser_room(soup.find('h1', class_='a10a3f92e9--title--UEAG3').text)# парсим колличество комнот
+            text = soup.find('p', class_='a10a3f92e9--description-text--YNzWU').text
             try:
                 photos = soup.find('div', class_='a10a3f92e9--item--CEy7Z')
                 all_photos = photos.find('img')['src']
@@ -51,6 +52,7 @@ def get_flat_content():
             flat.square = square
             flat.number_of_rooms = number_of_rooms
             flat.photos = all_photos
+            flat.text = text
             db.session.add(flat)
             db.session.commit()
 
