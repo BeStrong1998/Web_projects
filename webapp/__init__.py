@@ -1,5 +1,6 @@
 from flask import Flask, render_template, abort, flash, redirect, url_for
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
+from flask_paginate import Pagination, get_page_args
 """ Подключаем flask_login с наше приложение с помощью  LoginManager
     login_user - Для реализации обработке самой формы логина
     flash - позволяет передавать сообщения между route-ами
@@ -34,9 +35,12 @@ def create_app():
 
 
     @app.route('/')
-    def index():
+    @app.route('/index/<int:page>', methods = ['GET', 'POST'])
+    def index(page = 1):
         titels = "Объявления"
         flats = RealEstateAds.query.filter(RealEstateAds.photos.isnot(None)).order_by(RealEstateAds.date.desc()).all()
+        pagination = Pagination(page=page, per_page=per_page, total=total,
+                            css_framework='bootstrap4')
         return render_template("index.html", page_title=titels, flats=flats)
         
 

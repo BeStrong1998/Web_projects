@@ -2,9 +2,7 @@ import locale
 import platform
 
 from bs4 import BeautifulSoup
-from datetime import datetime, timedelta
-
-from webapp.parsers.utils import get_html, save_flat
+from webapp.parsers.utils import get_html, save_flat, parser_room, parse_date
 from webapp import db
 from webapp.model import RealEstateAds
 
@@ -13,42 +11,6 @@ if platform.system() == 'Windows':
     locale.setlocale(locale.LC_ALL, "russian")
 else:
     locale.setlocale(locale.LC_TIME, "ru_RU")
-
-
-def parse_date(date_str):# парсим строку на вхождение слова сегодня/вчера и меняем на актуальную дату
-    if 'сегодня' in date_str:
-        today = datetime.now()
-        date_str = date_str.replace('сегодня', today.strftime('%d %B %Y'))
-    elif 'вчера' in date_str:
-        yesterday = datetime.now() - timedelta(days=1)
-        date_str = date_str.replace('вчера', yesterday.strftime('%d %B %Y'))
-    try:
-        return datetime.strptime(date_str, '%d %B %Y, %H:%M')
-    except ValueError:
-        this_year = datetime.today().year# добавляем год к дате
-        return datetime.strptime(date_str, '%d %b, %H:%M').replace(year=this_year)
-
-
-def parser_room(room_str):
-    if '8-комн' in room_str:
-        room = 8
-    elif '7-комн' in room_str:
-        room = 7
-    elif '6-комн' in room_str:
-        room = 6
-    elif '5-комн' in room_str:
-        room = 5
-    elif '4-комн' in room_str:
-        room = 4
-    elif '3-комн' in room_str:
-        room = 3
-    elif '2-комн' in room_str:
-        room = 2
-    elif '1-комн' in room_str:
-        room = 1
-    else:# студия
-        room = 9
-    return room
 
 
 def get_flats_snippets():# парсимим страницу на cian.ru по новострокам и берем от туда ссылку на конкретное обялвение
